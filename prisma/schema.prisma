@@ -44,17 +44,20 @@ model Session {
 }
 
 model Account {
-  id           String    @id
-  accountId    String
-  providerId   String
-  userId       String
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken  String?
-  refreshToken String?
-  idToken      String?
-  // ...more OAuth-related fields
-  createdAt    DateTime
-  updatedAt    DateTime
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
 
   @@map("account")
 }
