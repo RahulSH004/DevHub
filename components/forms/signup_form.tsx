@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Alert, AlertDescription } from "../ui/alert";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 
 export default function SignUpform() {
@@ -47,6 +48,7 @@ export default function SignUpform() {
             name: validatedata.data.name,
             email: validatedata.data.email,
             password: validatedata.data.password,
+            callbackURL: "/"
         })
         if(error){
             setErrors((prev) => ({...prev, root: error.message as string}));
@@ -54,11 +56,13 @@ export default function SignUpform() {
             return;
         }
         setLoading(false);
-        router.push("")
+        if(data){
+            router.push("/")
+        }
     }
     return(
         <form 
-            action="handleSubmit"
+            onSubmit={handleSubmit}
             className="flex flex-col space-y-5"
             >
             {errors.root && (
@@ -70,6 +74,7 @@ export default function SignUpform() {
                 <Label htmlFor="name" className="text-left">Name</Label>
                 <Input 
                     id="name"
+                    name="name"
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData((prev) => ({...prev, name : e.target.value}))}
@@ -82,6 +87,7 @@ export default function SignUpform() {
                 <Input 
                     id="email"
                     type="email"
+                    name="email"
                     value={formData.email}
                     onChange={(e) => setFormData((prev) => ({...prev, email : e.target.value}))}
                     placeholder="Rahul@gmail.com"
@@ -95,14 +101,14 @@ export default function SignUpform() {
                     type="password"
                     value={formData.password}
                     onChange={(e) => setFormData((prev) => ({...prev, password : e.target.value}))}
-                    placeholder="******"
+                    placeholder=""
                 />
                 {errors.password && <span className="text-sm font-medium text-destructive text-left">{errors.password}</span>}
             </div>
             <div>
                 <Label htmlFor="confirmpassword" className="text-left">Confirm Password</Label>
                 <Input 
-                    id="confirm Password"
+                    id="confirmpassword"
                     type="password"
                     value={formData.confirmPassword}
                     onChange={(e) => setFormData((prev) => ({...prev, confirmPassword : e.target.value}))}
@@ -110,6 +116,13 @@ export default function SignUpform() {
                 />
                 {errors.confirmPassword && <span className="text-sm font-medium text-destructive text-left">{errors.confirmPassword}</span>}
             </div>
+            <Button 
+                type="submit" 
+                disabled={loading} 
+                className="mt-4 w-full"
+            >
+            {loading ? "Creating account..." : "Sign Up"}
+            </Button>
         </form>
     )
 }

@@ -11,5 +11,10 @@ export const SignupSchema = z.object({
     path: ["confirmpassword"]
 })
 
+export const SigninSchema = z.object({
+    email: z.email("Please enter the vaild email address"),
+    password: z.string().min(1, "password must not be empty").max(50)
+})
 
+export type SigninSchema = z.infer<typeof SigninSchema>
 export type SignupInput = z.infer<typeof SignupSchema>
