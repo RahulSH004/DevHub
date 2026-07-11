@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from "../ui/alert";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 
 export default function SignUpform() {
@@ -61,6 +62,7 @@ export default function SignUpform() {
         }
     }
     return(
+        <>
         <form 
             onSubmit={handleSubmit}
             className="flex flex-col space-y-5"
@@ -124,5 +126,19 @@ export default function SignUpform() {
             {loading ? "Creating account..." : "Sign Up"}
             </Button>
         </form>
+            <Button
+                type="button"
+                variant="outline"
+                onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/" })}
+            >
+                Continue with Google
+             </Button>
+        <p className="text-sm text-center text-muted-foreground">
+        Already have an account?{" "}
+        <Link href="/sign-in" className="underline underline-offset-4">
+          Sign in
+        </Link>
+      </p>
+      </>
     )
 }

@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from "../ui/alert"
 import { Label } from "../ui/label"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
+import Link from "next/link"
 
 
 export default function SignInform(){
@@ -60,6 +61,7 @@ export default function SignInform(){
       }
     }
     return(
+        <>
         <form onSubmit={handleSubmit}>
             {errors.root && (
             <Alert variant="destructive">
@@ -97,5 +99,19 @@ export default function SignInform(){
                 {loading ? "Signing in..." : "Sign In"}
             </Button>
         </form>
+            <Button
+                type="button"
+                variant="outline"
+                onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/" })}
+            >
+                Continue with Google
+            </Button>
+        <p className="text-sm text-center text-muted-foreground">
+        Don&apos;t have an account?{" "}
+        <Link href="/sign-up" className="underline underline-offset-4">
+          Sign up
+        </Link>
+      </p>
+        </>
     )
 }
