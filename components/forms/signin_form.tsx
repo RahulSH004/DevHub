@@ -55,8 +55,8 @@ export default function SignInform() {
             setLoading(false);
             return;
         }
-        setLoading(true);
         if (data) {
+            setLoading(true);
             router.push("/")
         }
     }

@@ -56,8 +56,8 @@ export default function SignUpform() {
             setLoading(false);
             return;
         }
-        setLoading(false);
         if (data) {
+            setLoading(true);
             router.push("/")
         }
     }
