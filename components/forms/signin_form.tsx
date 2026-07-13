@@ -22,6 +22,25 @@ export default function SignInform() {
         root: ""
     })
     const [loading, setLoading] = useState(false)
+    const [googleLoading, setGoogleLoading] = useState(false);
+
+    async function handleGoogleSignIn() {
+        setErrors((prev) => ({ ...prev, root: "" }));
+        setGoogleLoading(true);
+        try {
+            const { error } = await authClient.signIn.social({
+                provider: "google",
+                callbackURL: "/",
+            });
+            if (error) {
+                setErrors((prev) => ({ ...prev, root: error.message ?? "Google sign in failed" }));
+                setGoogleLoading(false);
+            }
+        } catch {
+            setErrors((prev) => ({ ...prev, root: "Google sign in failed" }));
+            setGoogleLoading(false);
+        }
+    }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
@@ -30,6 +49,7 @@ export default function SignInform() {
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        if (googleLoading) return;
         setErrors({ email: "", password: "", root: "" });
 
         const validationResult = SigninSchema.safeParse(formData);
@@ -44,20 +64,29 @@ export default function SignInform() {
             return;
         }
         setLoading(true);
+        let succeeded = false;
+        try {
+            const { data, error } = await authClient.signIn.email({
+                email: validationResult.data.email,
+                password: validationResult.data.password,
+            });
 
-        const { data, error } = await authClient.signIn.email({
-            email: validationResult.data.email,
-            password: validationResult.data.password,
-        });
-
-        if (error) {
-            setErrors((prev) => ({ ...prev, root: error.message as string }));
-            setLoading(false);
-            return;
+            if (error) {
+                setErrors((prev) => ({ ...prev, root: error.message as string }));
+                setLoading(false);
+                return;
+            }
+            if (data) {
+                succeeded = true
+                setLoading(true);
+                router.push("/")
+                return;
+            }
+        } catch {
+            setErrors((prev) => ({ ...prev, root: "Something went wrong. Try again." }));
         }
-        if (data) {
-            setLoading(true);
-            router.push("/")
+        finally {
+            if (!succeeded) setLoading(false);
         }
     }
     return (
@@ -106,30 +135,31 @@ export default function SignInform() {
                     </Button>
                 </form>
                 <div className="relative my-4">
-                        <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-gray-200"></div>
-                        </div>
-                        <div className="relative flex justify-center text-sm">
-                            <span className="px-2 text-gray-500 bg-white">Or continue with</span>
-                        </div>
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-200"></div>
                     </div>
+                    <div className="relative flex justify-center text-sm">
+                        <span className="px-2 text-gray-500 bg-white">Or continue with</span>
+                    </div>
+                </div>
                 <div className="flex flex-col space-y-3 mt-4">
-                <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/" })}
-                    className="w-full"
+                    <Button
+                        type="button"
+                        variant="outline"
+                        disabled={loading || googleLoading}
+                        onClick={handleGoogleSignIn}
+                        className="w-full"
                     >
-                    Continue with Google
-                </Button>
+                        {googleLoading ? "Redirecting..." : "Continue with Google"}
+                    </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">
-                <p className="text-muted-foreground">
-                    Don&apos;t have an account?{" "}
-                    <Link href="/sign-up" className="underline underline-offset-4 font-medium">
-                        SignUp
-                    </Link>
-                </p>
+                    <p className="text-muted-foreground">
+                        Don&apos;t have an account?{" "}
+                        <Link href="/sign-up" className="underline underline-offset-4 font-medium">
+                            SignUp
+                        </Link>
+                    </p>
                 </div>
             </div>
         </>
