@@ -16,6 +16,11 @@ const NAV_LINKS = [
 export default function Navbar() {
     const pathname = usePathname()
     const { data: session, isPending } = authClient.useSession();
+    
+    if (pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up")) {
+        return null;
+    }
+
     return (
         <nav aria-label="Main navigation" className={cn(
             "z-50 w-full transition-all",
@@ -39,8 +44,8 @@ export default function Navbar() {
                                     href={href}
                                     aria-current={isActive ? "page" : undefined}
                                     className={cn(
-                                        "text-sm font-medium transition-colors hover:text-foreground",
-                                        isActive ? "text-foreground" : "text-muted-foreground"
+                                        "text-sm font-medium transition-colors hover:text-amber-100 dark:hover:text-stone-100",
+                                        isActive ? "text-white dark:text-shadow-amber-100" : "text-white dark:text-shadow-amber-100/60"
                                     )}
                                 >
                                     {label}
