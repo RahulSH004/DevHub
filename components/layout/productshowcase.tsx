@@ -1,6 +1,6 @@
 import Image from "next/image";
-import product from "@/public/product.png"
-
+import productLight from "@/public/product1.png";
+import productDark from "@/public/product-dark.png";
 
 export default function ProductShowcase() {
   return (
@@ -26,13 +26,22 @@ export default function ProductShowcase() {
             <div className="w-12" />
           </div>
 
-          <Image
-            src={product}
-            alt="DevHub Dashboard"
-            width={1600}
-            height={900}
-            className="h-auto w-full object-cover blur-sm"
-          />
+          <div className="relative">
+            <Image
+              src={productLight}
+              alt="DevHub Dashboard Light"
+              width={1600}
+              height={900}
+              className="h-auto w-full object-cover blur-sm dark:hidden"
+            />
+            <Image
+              src={productDark}
+              alt="DevHub Dashboard Dark"
+              width={1600}
+              height={900}
+              className="h-auto w-full object-cover blur-sm hidden dark:block"
+            />
+          </div>
         </div>
 
       </div>
