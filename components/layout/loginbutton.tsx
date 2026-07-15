@@ -39,7 +39,7 @@ export function UserDropdown({ user }: { user: { name: string; image?: string | 
     : "U";
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="cursor-pointer outline-none rounded-full">
         <Avatar className="h-8 w-8 border">
           <AvatarImage src={user.image || undefined} alt={user.name} />

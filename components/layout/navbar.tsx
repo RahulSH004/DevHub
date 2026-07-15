@@ -1,70 +1,118 @@
-"use client"
+"use client";
 import Link from "next/link";
-import Logo from "./Logo";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
+
+import Logo from "./Logo";
 import { ThemeToggle } from "./Toggletheme";
 import { LoginButton, UserDropdown } from "./loginbutton";
 import { authClient } from "@/app/lib/auth-client";
 
+import {
+    Navbar as ResizableNavbar,
+    NavBody,
+    NavItems,
+    MobileNav,
+    MobileNavHeader,
+    MobileNavMenu,
+    MobileNavToggle,
+    NavbarButton,
+} from "@/components/ui/resizable_navbar";
+
 const NAV_LINKS = [
-    { href: "/", label: "Home" },
-    { href: "/tools", label: "Tools" },
-    { href: "/create", label: "Create" },
-] as const
+    { name: "Home", link: "/" },
+    { name: "Tools", link: "/tools" },
+    { name: "Create", link: "/create" },
+];
 
 export default function Navbar() {
-    const pathname = usePathname()
+    const pathname = usePathname();
     const { data: session, isPending } = authClient.useSession();
-    
+    const [mobileOpen, setMobileOpen] = useState(false);
+
+    // Hide navbar on auth pages
     if (pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up")) {
         return null;
     }
 
     return (
-        <nav aria-label="Main navigation" className={cn(
-            "z-50 w-full transition-all",
-            pathname === "/" 
-                ? "absolute top-0 bg-transparent border-none" 
-                : "sticky top-0 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
-        )}>
-            <div className="max-w-7xl mx-auto px-6 mt-2">
-                <div className="grid grid-cols-3 h-14 items-center">
-                    <div className="justify-self-start">
+        <ResizableNavbar>
+                {/* ── Desktop ── */}
+                <NavBody>
+                    <Link href="/" className="relative z-20">
                         <Logo />
-                    </div>
-                    <div className="flex items-center justify-center gap-8">
-                        {NAV_LINKS.map(({ href, label }) => {
-                            const isActive =
-                                href === "/" ? pathname === "/" : pathname.startsWith(href)
+                    </Link>
 
-                            return (
-                                <Link
-                                    key={href}
-                                    href={href}
-                                    aria-current={isActive ? "page" : undefined}
-                                    className={cn(
-                                        "text-sm text-shadow-md font-medium transition-colors hover:text-stone-500 hover:underline underline-offset-4 dark:text-white dark:hover:text-stone-100",
-                                        isActive ? "text-black dark:text-shadow-stone-300" : "text-black dark:text-shadow-stone-100/60"
-                                    )}
-                                >
-                                    {label}
-                                </Link>
-                            )
-                        })}
-                    </div>
-                    <div className="flex items-center justify-self-end gap-3">
+                    <NavItems items={NAV_LINKS} />
+
+                    <div className="flex items-center gap-3">
                         <ThemeToggle />
                         {isPending ? (
-                        <div className="h-8 w-8 bg-muted animate-pulse rounded-full" />
+                            <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
                         ) : session?.user ? (
-                        <UserDropdown user={session.user} />
+                            <UserDropdown user={session.user} />
                         ) : (
-                        <LoginButton />
+                            <NavbarButton
+                                as={Link}
+                                href="/sign-in"
+                                variant="dark"
+                            >
+                                Sign In
+                            </NavbarButton>
                         )}
                     </div>
-                </div>
-            </div>
-        </nav>
-    )
+                </NavBody>
+
+                {/* ── Mobile ── */}
+                <MobileNav>
+                    <MobileNavHeader>
+                        <Link href="/" className="relative z-20">
+                            <Logo />
+                        </Link>
+
+                        <div className="flex items-center gap-3">
+                            <ThemeToggle />
+                            <MobileNavToggle
+                                isOpen={mobileOpen}
+                                onClick={() => setMobileOpen(!mobileOpen)}
+                            />
+                        </div>
+                    </MobileNavHeader>
+
+                    <MobileNavMenu
+                        isOpen={mobileOpen}
+                        onClose={() => setMobileOpen(false)}
+                    >
+                        {NAV_LINKS.map((item) => (
+                            <Link
+                                key={item.link}
+                                href={item.link}
+                                onClick={() => setMobileOpen(false)}
+                                className="w-full text-neutral-600 dark:text-neutral-300"
+                            >
+                                {item.name}
+                            </Link>
+                        ))}
+
+                        <div className="flex w-full items-center gap-3 pt-2">
+                            {isPending ? (
+                                <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
+                            ) : session?.user ? (
+                                <UserDropdown user={session.user} />
+                            ) : (
+                                <NavbarButton
+                                    as={Link}
+                                    href="/sign-in"
+                                    variant="dark"
+                                    className="w-full"
+                                    onClick={() => setMobileOpen(false)}
+                                >
+                                    Sign In
+                                </NavbarButton>
+                            )}
+                        </div>
+                    </MobileNavMenu>
+                </MobileNav>
+        </ResizableNavbar>
+    );
 }

@@ -2,7 +2,6 @@
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { useCallback } from "react"
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 type Category = {
@@ -25,7 +24,6 @@ export function CategorySidebar({ categories, activeSlug }: Props) {
     const setCategory = useCallback(
         (slug: string | null) => {
             const params = new URLSearchParams(searchParams.toString())
-            // Reset to page 1 when category changes
             params.delete("page")
             if (slug) {
                 params.set("category", slug)
@@ -39,45 +37,49 @@ export function CategorySidebar({ categories, activeSlug }: Props) {
 
     const isAll = !activeSlug
 
+    const itemBase =
+        "group flex items-center justify-between w-full rounded-lg px-2.5 py-1.5 text-sm transition-colors duration-100 ease-out cursor-pointer select-none"
+
+    const activeClass = "bg-foreground/[0.06] text-foreground font-medium"
+    const inactiveClass = "text-muted-foreground hover:bg-foreground/[0.04] hover:text-foreground font-normal"
+
     return (
-        <nav className="flex flex-col gap-1.5" aria-label="Tool categories">
-            {/* All button */}
-            <Button
-                variant={isAll ? "default" : "ghost"}
-                className={cn(
-                    "justify-start w-full text-left font-medium rounded-xl transition-all duration-200 overflow-hidden",
-                    !isAll && "text-muted-foreground hover:text-foreground hover:bg-muted/80"
-                )}
+        <nav className="flex flex-col gap-0.5" aria-label="Tool categories">
+
+            {/* All */}
+            <button
+                type="button"
+                className={cn(itemBase, isAll ? activeClass : inactiveClass)}
                 onClick={() => setCategory(null)}
                 aria-current={isAll ? "page" : undefined}
             >
-                <span className="flex-1 min-w-0 truncate text-left">All</span>
-            </Button>
+                <span className="truncate min-w-0">All</span>
+            </button>
 
-            {/* Category buttons */}
+            {/* Divider */}
+            <div className="my-1 h-px bg-border/60 mx-1" role="separator" />
+
+            {/* Category rows */}
             {categories.map((cat) => {
                 const isActive = activeSlug === cat.slug
                 return (
-                    <Button
+                    <button
                         key={cat.id}
-                        variant={isActive ? "default" : "ghost"}
-                        className={cn(
-                            "justify-start w-full text-left font-medium rounded-xl transition-all duration-200 overflow-hidden",
-                            !isActive && "text-muted-foreground hover:text-foreground hover:bg-muted/80"
-                        )}
+                        type="button"
+                        className={cn(itemBase, isActive ? activeClass : inactiveClass)}
                         onClick={() => setCategory(cat.slug)}
                         aria-current={isActive ? "page" : undefined}
                     >
-                        <span className="flex-1 min-w-0 truncate text-left">{cat.name}</span>
-                        <span className={cn(
-                            "shrink-0 text-xs tabular-nums rounded-full px-2 py-0.5",
-                            isActive
-                                ? "bg-primary-foreground/20 text-primary-foreground"
-                                : "bg-muted text-muted-foreground"
-                        )}>
+                        <span className="truncate min-w-0 text-left">{cat.name}</span>
+                        <span
+                            className={cn(
+                                "shrink-0 ml-2 tabular-nums text-xs transition-colors duration-100",
+                                isActive ? "text-foreground/60" : "text-muted-foreground/50"
+                            )}
+                        >
                             {cat._count.tools}
                         </span>
-                    </Button>
+                    </button>
                 )
             })}
         </nav>
