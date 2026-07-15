@@ -50,7 +50,7 @@ export function UserDropdown({ user }: { user: { name: string; image?: string | 
       <DropdownMenuContent align="end" className="w-32 mt-2">
         <DropdownMenuItem 
           onClick={handleLogout} 
-          className="text-destructive focus:bg-destructive focus:text-destructive-foreground cursor-pointer text-center justify-center font-medium"
+          className="text-destructive focus:bg-destructive focus:text-destructive-foreground cursor-pointer text-center justify-center font-medium hover:bg-red-200/50 hover:text-white dark:hover:bg-red-200/10"
         >
           Sign Out
         </DropdownMenuItem>

@@ -44,8 +44,8 @@ export default function Navbar() {
                                     href={href}
                                     aria-current={isActive ? "page" : undefined}
                                     className={cn(
-                                        "text-sm font-medium transition-colors hover:text-amber-100 dark:hover:text-stone-100",
-                                        isActive ? "text-white dark:text-shadow-amber-100" : "text-white dark:text-shadow-amber-100/60"
+                                        "text-sm text-shadow-md font-medium transition-colors hover:text-stone-500 hover:underline underline-offset-4 dark:text-white dark:hover:text-stone-100",
+                                        isActive ? "text-black dark:text-shadow-stone-300" : "text-black dark:text-shadow-stone-100/60"
                                     )}
                                 >
                                     {label}
