@@ -4,17 +4,12 @@ import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SearchBox } from "./searchbox"
 
-/**
- * Top section of the tools page — search bar, tagline, and submit CTA.
- * Replaces the old "Smallhero" content block while the grid background
- * is now handled separately by ToolsPageBackground.
- */
+
 export function ToolsHeader() {
     return (
         <section className="relative z-10 flex flex-col items-center justify-center px-4 pt-28 pb-12 text-center">
             <div className="max-w-2xl w-full space-y-5 mt-20">
 
-                {/* SearchBox uses useSearchParams — needs Suspense boundary */}
                 <div className="flex justify-center">
                     <Suspense
                         fallback={

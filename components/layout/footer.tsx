@@ -6,19 +6,19 @@ export default function Footer() {
   return (
     <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-background py-8 px-6">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        
+
         {/* Left: Logo */}
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className="flex items-center gap-2 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600 focus-visible:ring-offset-2 rounded-sm"
         >
           <Logo />
         </Link>
-        
+
         {/* Middle: Contact Us & Copyright */}
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
-          <Link 
-            href="mailto:hello@devhub.dev" 
+          <Link
+            href="mailto:hello@devhub.dev"
             className="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600 focus-visible:ring-offset-2 rounded-sm px-1"
           >
             Contact Us
@@ -30,19 +30,19 @@ export default function Footer() {
 
         {/* Right: Social Icons */}
         <div className="flex items-center gap-5">
-          <Link 
-            href="https://twitter.com" 
-            target="_blank" 
-            rel="noreferrer" 
-            className="text-zinc-400 dark:text-zinc-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600 focus-visible:ring-offset-2 rounded-sm p-1"
+          <Link
+            href="https://twitter.com"
+            target="_blank"
+            rel="noreferrer"
+            className="text-stone-400 dark:text-white/30 hover:text-black/90 dark:hover:text-white/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600 focus-visible:ring-offset-2 rounded-sm p-1"
           >
             <span className="sr-only">X (formerly Twitter)</span>
             <FaXTwitter className="w-5 h-5" />
           </Link>
-          <Link 
-            href="https://github.com" 
-            target="_blank" 
-            rel="noreferrer" 
+          <Link
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
             className="text-zinc-400 dark:text-zinc-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-600 focus-visible:ring-offset-2 rounded-sm p-1"
           >
             <span className="sr-only">GitHub</span>

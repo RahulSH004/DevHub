@@ -33,7 +33,7 @@ export function PaginationControls({ currentPage, totalPages }: Props) {
     const hasPrev = currentPage > 1
     const hasNext = currentPage < totalPages
 
-    // Generate page numbers to show (max 5 around current)
+
     const pages: (number | "...")[] = []
     if (totalPages <= 7) {
         for (let i = 1; i <= totalPages; i++) pages.push(i)

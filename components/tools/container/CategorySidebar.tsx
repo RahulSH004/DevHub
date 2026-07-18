@@ -46,7 +46,6 @@ export function CategorySidebar({ categories, activeSlug }: Props) {
     return (
         <nav className="flex flex-col gap-0.5" aria-label="Tool categories">
 
-            {/* All */}
             <button
                 type="button"
                 className={cn(itemBase, isAll ? activeClass : inactiveClass)}
@@ -56,10 +55,8 @@ export function CategorySidebar({ categories, activeSlug }: Props) {
                 <span className="truncate min-w-0">All</span>
             </button>
 
-            {/* Divider */}
             <div className="my-1 h-px bg-border/60 mx-1" role="separator" />
 
-            {/* Category rows */}
             {categories.map((cat) => {
                 const isActive = activeSlug === cat.slug
                 return (

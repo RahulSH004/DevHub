@@ -27,13 +27,7 @@ type ToolsContentProps = {
     totalPages: number
 }
 
-/**
- * Main content area of the tools page — outer card container with
- * the header row, category sidebar, tool grid, and pagination.
- *
- * Extracted from page.tsx so the page file stays lean (data-fetching only)
- * and this component owns all the presentational layout.
- */
+
 export function ToolsContent({
     categories,
     tools,
@@ -57,7 +51,6 @@ export function ToolsContent({
                 }}
             >
 
-                {/* Header */}
                 <div className="flex items-center gap-3 mb-6 pl-1">
                     <h1 className="text-2xl font-bold tracking-tight">Tools</h1>
                     <div className="border border-border/60 rounded-full px-4 py-1 text-sm font-semibold bg-background shadow-sm tabular-nums">
@@ -72,16 +65,12 @@ export function ToolsContent({
 
                 <div className="flex flex-col md:flex-row gap-5 lg:gap-6">
 
-                    {/* LEFT — Categories sidebar */}
                     <aside className="w-full md:w-56 shrink-0">
                         <div className="border border-border/60 rounded-2xl p-4 bg-background/50 shadow-sm md:sticky md:top-24">
                             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2.5 px-1">
                                 Categories
                             </p>
-                            {/*
-                              Suspense boundary required: CategorySidebar calls useSearchParams()
-                              which requires a client boundary.
-                            */}
+
                             <Suspense fallback={<CategorySidebarSkeleton count={categories.length + 1} />}>
                                 <CategorySidebar
                                     categories={categories}
@@ -91,7 +80,6 @@ export function ToolsContent({
                         </div>
                     </aside>
 
-                    {/* RIGHT — Tools grid */}
                     <main className="flex-1 min-w-0">
                         <div className="p-5 md:p-6 min-h-[500px] flex flex-col">
 
@@ -109,7 +97,6 @@ export function ToolsContent({
                                         ))}
                                     </div>
 
-                                    {/* Pagination */}
                                     <Suspense fallback={null}>
                                         <PaginationControls
                                             currentPage={currentPage}
@@ -118,7 +105,6 @@ export function ToolsContent({
                                     </Suspense>
                                 </>
                             ) : (
-                                /* Empty state */
                                 <div className="flex-1 flex flex-col items-center justify-center py-24 text-center gap-2">
                                     <div className="text-5xl" aria-hidden>🔍</div>
                                     <p className="text-base font-semibold text-foreground">

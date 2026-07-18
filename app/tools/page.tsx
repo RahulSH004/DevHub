@@ -20,7 +20,6 @@ export default async function Tools({ searchParams }: { searchParams: SearchPara
     const activeSlug = category ?? null
     const searchQuery = q?.trim() ?? ""
 
-    // Fetch categories with approved tool counts
     const categories = await db.category.findMany({
         orderBy: { name: "asc" },
         include: {
@@ -32,7 +31,6 @@ export default async function Tools({ searchParams }: { searchParams: SearchPara
         },
     })
 
-    // Build the where clause for tools
     const where = {
         status: "APPROVED" as const,
         ...(activeSlug ? { category: { slug: activeSlug } } : {}),
@@ -48,12 +46,9 @@ export default async function Tools({ searchParams }: { searchParams: SearchPara
             : {}),
     }
 
-    // Total count for pagination
     const totalCount = await db.tool.count({ where })
     const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
     const safePage = Math.min(currentPage, totalPages)
-
-    // Fetch the current page of tools
     const tools = await db.tool.findMany({
         where,
         include: {
@@ -66,13 +61,8 @@ export default async function Tools({ searchParams }: { searchParams: SearchPara
 
     return (
         <div className="min-h-screen bg-background relative">
-            {/* Full-page grid background */}
             <ToolsPageBackground />
-
-            {/* Search + tagline hero section */}
             <ToolsHeader />
-
-            {/* Tools listing — sidebar + grid + pagination */}
             <ToolsContent
                 categories={categories}
                 tools={tools}
