@@ -12,6 +12,7 @@ type Category = {
 
 type Tool = {
     id: string
+    slug: string | null
     name: string
     logoUrl: string | null
     category: { name: string; slug: string }
@@ -89,7 +90,7 @@ export function ToolsContent({
                                         {tools.map((tool) => (
                                             <ToolCard
                                                 key={tool.id}
-                                                id={tool.id}
+                                                slug={tool.slug || tool.id}
                                                 name={tool.name}
                                                 category={tool.category.name}
                                                 logoUrl={tool.logoUrl}

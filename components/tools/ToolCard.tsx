@@ -3,19 +3,19 @@ import { ArrowUpRight } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 type ToolCardProps = {
-  id: string
+  slug: string
   name: string
   category: string
   logoUrl?: string | null
   description?: string | null
 }
 
-export function ToolCard({ id, name, category, logoUrl, description }: ToolCardProps) {
+export function ToolCard({ slug, name, category, logoUrl, description }: ToolCardProps) {
   const initials = name.slice(0, 2).toUpperCase()
 
   return (
     <Link
-      href={`/tools/${id}`}
+      href={`/tools/${slug}`}
       className="group relative flex flex-col gap-3 rounded-xl border border-border/50 bg-background p-4 
         transition-all duration-150 ease-out
         hover:border-border hover:shadow-md hover:-translate-y-0.5

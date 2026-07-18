@@ -87,6 +87,7 @@ model Tool {
   id          String     @id @default(cuid())
   name        String
   description String
+  slug        String?    @unique
   url         String     @unique
   logoUrl     String?
   status      ToolStatus @default(PENDING)

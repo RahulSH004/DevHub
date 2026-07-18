@@ -20,11 +20,11 @@ const statusConfig: Record<string, { label: string; className: string }> = {
     },
 }
 
-export default async function Toolinfo({ params }: { params: Promise<{ toolId: string }> }) {
-    const { toolId } = await params
+export default async function Toolinfo({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params
     const toolInfo = await prisma.tool.findUnique({
         where: {
-            id: toolId
+            slug: slug
         },
         include: {
             category: true,
