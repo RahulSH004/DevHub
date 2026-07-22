@@ -4,7 +4,7 @@ import { ToolsContent } from "@/components/tools/ToolsContent"
 import Footer from "@/components/layout/footer"
 import db from "@/lib/prisma"
 
-const PAGE_SIZE = 9
+const PAGE_SIZE = 15
 
 type SearchParams = Promise<{
     category?: string
