@@ -12,7 +12,8 @@ export async function approveTool(toolId: string) {
     data: { status: "APPROVED" },
   })
 
-  revalidatePath("/dashboard")
+  revalidatePath("/admin")
+  revalidatePath("/tools")
 }
 
 export async function rejectTool(toolId: string) {
@@ -23,5 +24,32 @@ export async function rejectTool(toolId: string) {
     data: { status: "REJECTED" },
   })
 
-  revalidatePath("/dashboard")
+  revalidatePath("/admin")
+  revalidatePath("/tools")
 }
+
+export async function deleteTool(toolId: string) {
+  await requireAdmin()
+
+  await prisma.tool.delete({
+    where: { id: toolId },
+  })
+
+  revalidatePath("/admin")
+  revalidatePath("/tools")
+}
+
+export async function addCategory(name: string, slug: string) {
+  await requireAdmin()
+
+  const category = await prisma.category.create({
+    data: {
+      name,
+      slug: slug || name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, ""),
+    },
+  })
+
+  revalidatePath("/admin")
+  revalidatePath("/tools")
+  return category
+}

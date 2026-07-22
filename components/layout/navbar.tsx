@@ -30,8 +30,12 @@ export default function Navbar() {
     const { data: session, isPending } = authClient.useSession();
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    // Hide navbar on auth pages
-    if (pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up")) {
+    // Hide navbar on auth pages and admin pages
+    if (
+        pathname.startsWith("/sign-in") ||
+        pathname.startsWith("/sign-up") ||
+        pathname.startsWith("/admin")
+    ) {
         return null;
     }
 

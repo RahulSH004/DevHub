@@ -77,24 +77,29 @@ export default function SignInform() {
                 return;
             }
             if (data) {
-                succeeded = true
+                succeeded = true;
                 setLoading(true);
-                router.push("/")
+                // Redirect admin users to /admin, others to /
+                const role = (data.user as any)?.role;
+                if (role === "ADMIN") {
+                    router.push("/admin");
+                } else {
+                    router.push("/");
+                }
                 return;
             }
         } catch {
             setErrors((prev) => ({ ...prev, root: "Something went wrong. Try again." }));
-        }
-        finally {
+        } finally {
             if (!succeeded) setLoading(false);
         }
     }
     return (
         <>
-            <div className="max-w-sm mx-auto mt-10 p-6 bg-white border rounded-xl shadow-sm">
+            <div className="max-w-sm mx-auto mt-10 p-6 bg-card border border-border rounded-xl shadow-sm">
                 <div className="m-6 text-center">
-                    <h1 className="text-2xl font-semibold tracking-tight">Welcome back!</h1>
-                    <p className="text-sm text-gray-500">Enter your email to sign in to your account</p>
+                    <h1 className="text-2xl font-semibold tracking-tight text-foreground">Welcome back!</h1>
+                    <p className="text-sm text-muted-foreground mt-1">Enter your email to sign in to your account</p>
                 </div>
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                     {errors.root && (
@@ -108,9 +113,10 @@ export default function SignInform() {
                             id="email"
                             name="email"
                             type="email"
+                            autoComplete="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="Rahul@gmail.com"
+                            placeholder="you@example.com"
                         />
                         {errors.email && <span className="text-sm font-medium text-destructive text-left">{errors.email}</span>}
                     </div>
@@ -120,9 +126,10 @@ export default function SignInform() {
                             id="password"
                             name="password"
                             type="password"
+                            autoComplete="current-password"
                             value={formData.password}
                             onChange={handleChange}
-                            placeholder="password"
+                            placeholder="••••••••"
                         />
                         {errors.password && <span className="text-sm font-medium text-destructive text-left">{errors.password}</span>}
                     </div>
@@ -136,10 +143,10 @@ export default function SignInform() {
                 </form>
                 <div className="relative my-4">
                     <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-gray-200"></div>
+                        <div className="w-full border-t border-border"></div>
                     </div>
                     <div className="relative flex justify-center text-sm">
-                        <span className="px-2 text-gray-500 bg-white">Or continue with</span>
+                        <span className="px-2 text-muted-foreground bg-card">Or continue with</span>
                     </div>
                 </div>
                 <div className="flex flex-col space-y-3 mt-4">
@@ -156,8 +163,8 @@ export default function SignInform() {
                 <div className="mt-4 text-center text-sm">
                     <p className="text-muted-foreground">
                         Don&apos;t have an account?{" "}
-                        <Link href="/sign-up" className="underline underline-offset-4 font-medium">
-                            SignUp
+                        <Link href="/sign-up" className="underline underline-offset-4 font-medium text-foreground">
+                            Sign Up
                         </Link>
                     </p>
                 </div>

@@ -3,7 +3,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./db";
 import { headers } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID as string;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET as string;
@@ -26,18 +26,33 @@ export const auth = betterAuth({
             role: {
                 type: "string",
                 required: false,
-                default: "USER"
+                defaultValue: "USER",
+                input: false,
             }
         }
     }
 });
 
-export async function requireAdmin(){
-    const session  = await auth.api.getSession({
+export async function requireAdmin() {
+    const session = await auth.api.getSession({
         headers: await headers()
     })
-    if(!session || session.user.role !== "ADMIN"){
-        notFound()
+
+    // Not logged in → redirect to sign-in
+    if (!session) {
+        redirect("/sign-in")
     }
+
+    // Logged in but not an admin → redirect to home
+    if (session.user.role !== "ADMIN") {
+        redirect("/")
+    }
+
     return session;
+}
+
+export async function getSession() {
+    return await auth.api.getSession({
+        headers: await headers()
+    })
 }

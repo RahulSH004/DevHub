@@ -1,12 +1,20 @@
-// call the requireAdmin function in the server component to check if the user is an admin and protect evverthing in this layout
-
-import { requireAdmin } from "@/app/lib/auth";
+import { requireAdmin } from "@/app/lib/auth"
+import prisma from "@/lib/prisma"
+import { AdminShell } from "@/components/admin/admin-shell"
 
 export default async function AdminLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode
 }) {
-    const session = await requireAdmin();
-    return <>{children}</>;
+  const session = await requireAdmin()
+  const pendingCount = await prisma.tool.count({
+    where: { status: "PENDING" },
+  })
+
+  return (
+    <AdminShell user={session.user} pendingCount={pendingCount}>
+      {children}
+    </AdminShell>
+  )
 }
