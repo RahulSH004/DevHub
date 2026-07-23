@@ -1,18 +1,28 @@
-import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export default function HeroImage() {
     return (
         <>
-            <div
-                className={cn(
-                    "absolute inset-0",
-                    "[bg-size:40px_40px]",
-                    "[bg-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
-                    "dark:[bg-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]",
-                )}
+            {/* Light theme hero illustration */}
+            <Image
+                src="/smallhero1.png"
+                alt=""
+                fill
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                className="object-cover object-center dark:hidden"
+                priority
             />
-            {/* Radial fade — dissolves grid edges */}
-            <div className="pointer-events-none absolute inset-0 bg-white [mask:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black" />
+            {/* Dark theme hero illustration */}
+            <Image
+                src="/drakhero.png"
+                alt=""
+                fill
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                className="object-cover object-center hidden dark:block"
+                priority
+            />
+            {/* Bottom fade into page background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
         </>
     )
 }

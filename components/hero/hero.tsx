@@ -15,15 +15,15 @@ export function Hero() {
 
             <div className="relative z-10 flex flex-col items-center justify-center px-4 py-20 text-center">
                 <div className="max-w-3xl space-y-6">
-                    <span className="text-sm font-medium uppercase tracking-widest text-gray-900/70">
+                    <span className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
                         Built for people who ship
                     </span>
 
-                    <h1 className="font-sans text-balance text-4xl font-bold tracking-tight text-gray-950 sm:text-5xl md:text-6xl lg:text-7xl lg:leading-[1.1]">
+                    <h1 className="font-sans text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl lg:leading-[1.1]">
                         Discover the tools developers actually use.
                     </h1>
 
-                    <p className="max-w-2xl text-pretty text-base leading-relaxed text-gray-900/80 sm:text-lg sm:leading-8 px-4 mx-auto">
+                    <p className="max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-8 px-4 mx-auto">
                         A curated directory of frameworks, APIs, and dev tools tagged,
                         categorized, and vetted by real builders. No ads, no noise.
                     </p>

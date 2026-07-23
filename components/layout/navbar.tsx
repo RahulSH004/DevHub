@@ -22,7 +22,7 @@ import {
 const NAV_LINKS = [
     { name: "Home", link: "/" },
     { name: "Tools", link: "/tools" },
-    { name: "Create", link: "/create" },
+    { name: "Submit Tool", link: "/submit" },
 ];
 
 export default function Navbar() {

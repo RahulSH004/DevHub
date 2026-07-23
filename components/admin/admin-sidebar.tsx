@@ -28,6 +28,7 @@ import {
   ShieldCheck,
   Sparkles,
   ArrowLeft,
+  Plus,
 } from "lucide-react"
 
 interface AdminSidebarProps extends React.ComponentProps<typeof Sidebar> {
@@ -133,6 +134,31 @@ export function AdminSidebar({ user, pendingCount = 0, ...props }: AdminSidebarP
                   </SidebarMenuItem>
                 )
               })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarSeparator className="my-3 mx-3" />
+
+        <SidebarGroup>
+          <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
+            Actions
+          </SidebarGroupLabel>
+          <SidebarGroupContent className="mt-1">
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === "/admin/tools/create"}
+                  tooltip="Add New Tool"
+                  className="group/btn relative font-medium transition-all active:scale-[0.98]"
+                >
+                  <Link href="/admin/tools/create" className="flex items-center gap-3">
+                    <Plus className="size-4.5 text-muted-foreground group-hover/btn:text-foreground group-data-[active=true]/btn:text-primary transition-colors" />
+                    <span className="flex-1 truncate">Add New Tool</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

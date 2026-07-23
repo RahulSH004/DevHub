@@ -32,14 +32,14 @@ export default function ProductShowcase() {
               alt="DevHub Dashboard Light"
               width={1600}
               height={900}
-              className="h-auto w-full object-cover blur-sm dark:hidden"
+              className="h-auto w-full object-cover dark:hidden"
             />
             <Image
               src={productDark}
               alt="DevHub Dashboard Dark"
               width={1600}
               height={900}
-              className="h-auto w-full object-cover blur-sm hidden dark:block"
+              className="h-auto w-full object-cover hidden dark:block"
             />
           </div>
         </div>
