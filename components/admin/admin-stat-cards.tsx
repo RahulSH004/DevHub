@@ -47,7 +47,7 @@ export function AdminStatCards({
       description: pending > 0 ? "Requires admin action" : "All caught up!",
       icon: Clock,
       badgeText: pending > 0 ? `${pending} action needed` : "Clean queue",
-      badgeVariant: (pending > 0 ? "destructive" : "outline") as const,
+      badgeVariant: pending > 0 ? ("destructive" as const) : ("outline" as const),
       accentColor: "text-amber-500 dark:text-amber-400",
       bgColor: "bg-amber-500/10 dark:bg-amber-400/10",
       borderColor: "hover:border-amber-500/30",
